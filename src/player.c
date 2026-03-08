@@ -45,20 +45,16 @@ void	UpdatePlayer(t_player *player, float dt)
 	}
 	if (IsKeyDown(KEY_LEFT))
 	{
-		if (player->dir == 1) {
-			FlipTextureVertical(&(player->idle_image[player->current_frame]));
-			FlipTextureVertical(&(player->walk_image[player->current_frame]));
-		}
+		/*if (player->dir == 1) {
+			FlipTextureHorizontal(&(player->idle_image[player->current_frame]));
+			FlipTextureHorizontal(&(player->walk_image[player->current_frame]));
+		}*/
 		player->pos_x -= player->speed * dt;
 		player->state = WALK;
 		player->dir = -1;
 	}
 	else if (IsKeyDown(KEY_RIGHT))
 	{
-		if (player->dir == -1) {
-			FlipTextureVertical(&(player->idle_image[player->current_frame]));
-			FlipTextureVertical(&(player->walk_image[player->current_frame]));
-		}
 		player->pos_x += player->speed * dt;
 		player->state = WALK;
 		player->dir = 1;
@@ -88,6 +84,11 @@ void	DrawPlayer(t_player player)
 			player.idle_image[player.current_frame].height / 4.0f
 		};
 
+		if (player.dir == -1)
+		{
+			source_rec.width = -source_rec.width;
+		}
+
 		DrawTexturePro(player.idle_image[player.current_frame], source_rec, dest_rec, origin, 0.0f, WHITE);
 	}
 
@@ -105,7 +106,12 @@ void	DrawPlayer(t_player player)
 			player.walk_image[player.current_frame].width / 4.0f,
 			player.walk_image[player.current_frame].height / 4.0f
 		};
-	
+		
+		if (player.dir == -1)
+		{
+			source_rec.width = -source_rec.width;
+		}
+
 		DrawTexturePro(player.walk_image[player.current_frame], source_rec, dest_rec, origin, 0.0f, WHITE);
 	}
 }

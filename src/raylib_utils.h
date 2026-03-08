@@ -5,5 +5,6 @@
 
 Texture2D	LoadTextureFromFile(const char *path);
 void		FlipTextureVertical(Texture2D *tex);
+void		FlipTextureHorizontal(Texture2D *tex);
 
 #endif

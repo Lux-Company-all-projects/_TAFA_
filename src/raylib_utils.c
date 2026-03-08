@@ -36,3 +36,28 @@ void	FlipTextureVertical(Texture2D *tex)
 	// Libérer l'image (data est toujours alloué)
 	UnloadImage(img);
 }
+
+void	FlipTextureHorizontal(Texture2D *tex)
+{
+	Image img = LoadImageFromTexture(*tex);
+    
+        Color *pixels = (Color *)img.data;
+        int width = img.width;
+        int height = img.height;
+  
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width / 2; x++)
+	        {
+	        	int leftIndex = y * width + x;
+	                int rightIndex = y * width + (width - 1 - x);
+	                Color temp = pixels[leftIndex];
+	                pixels[leftIndex] = pixels[rightIndex];
+	                pixels[rightIndex] = temp;
+	        }
+	}
+	
+	UpdateTexture(*tex, img.data);
+	
+	UnloadImage(img);
+}
