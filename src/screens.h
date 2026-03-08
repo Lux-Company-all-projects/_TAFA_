@@ -2,6 +2,8 @@
 #define SCREENS_H
 
 #include "raylib.h"
+#include "player.h"
+#include "raylib_utils.h"
 
 //----------------------------------------------------------------------------------
 // Types and Structures Definition
