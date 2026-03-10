@@ -14,7 +14,7 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 ---
 
 ## Fonctionnalités
-*Plus tard*
+[] - Animations (WALK, IDLE, )
 
 ## Crédits
 Luca RANDRIANIRINA alias @Lux
