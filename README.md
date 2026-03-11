@@ -1,4 +1,4 @@
-# TAFA_WITH_GOD
+# TAFA
 
 <!-- Capture d'écran ou GIF animé -->
 <!-- ![Capture d'écran du jeu](link/to/image.png) -->
@@ -14,7 +14,7 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 ---
 
 ## Fonctionnalités
-[] - Animations (WALK, IDLE, )
+[:check_mark:] - Animations (WALK, IDLE, )
 
 ## Crédits
 Luca RANDRIANIRINA alias @Lux
