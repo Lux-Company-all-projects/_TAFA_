@@ -16,7 +16,7 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 
 ## Fonctionnalités
 - ✅ Mouvements
-- ❌ Jump
+- ❌ Jump [TO DO: BUG FIX]
 - ✅ Animations (WALK, IDLE)
 - ❌ HUD
 - ❌ Title screen
