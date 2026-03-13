@@ -11,6 +11,7 @@ typedef struct s_player {
 	float		speed_x;
 	float		vy;
 	float		jump_force;
+	bool		is_jumping;
 	int			dir; // -1: left; 1: right; 
 	int			current_frame;
 	float		timer;

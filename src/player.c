@@ -1,23 +1,24 @@
 #include "player.h"
 
-static float gravity = 100.0f;
+static float gravity = 900.0f;
 static float ground_level = SCREEN_HEIGHT * 0.85f;
 
 void	InitPlayer(t_player *player)
 {
-	gravity = 100.0f;
+	gravity = 900.0f;
 	ground_level = SCREEN_HEIGHT * 0.85f;
 
 	player->pos_x = SCREEN_WIDTH * 0.1;
 	player->pos_y = ground_level;
 	player->speed_x = 100.0f;
 	player->vy = 0.0f;
-	player->jump_force = 500.0f;
+	player->jump_force = 400.0f;
+	player->is_jumping = false;
 	player->dir = 0;
 
 	player->current_frame = 0;
 	player->timer = 0;
-	player->frame_time = 0.1f;
+	player->frame_time = 0;
 
 	player->state = IDLE;
 
@@ -54,19 +55,17 @@ void	InitPlayer(t_player *player)
 void	UpdatePlayer(t_player *player, float dt)
 {
 	player->timer += dt;
-    if (player->pos_y < SCREEN_HEIGHT * 0.85f || player->vy < 0)
+	player->frame_time = (player->state == JUMP) ? 0.5f : 0.1f;
+    if (player->pos_y >= ground_level)
     {
-        player->vy += gravity * dt;
-        player->pos_y += player->vy * dt;
-    }
-    else
-    {
-        // Le joueur est au sol
-        player->pos_y = SCREEN_HEIGHT * 0.85f;
+		// Le joueur est au sol
+        player->pos_y = ground_level;
         player->vy = 0;
-        if (player->state == JUMP)
-            player->state = IDLE;
-    }
+		player->state = IDLE;
+		player->is_jumping = false;
+	}
+	else
+		player->state = JUMP;
 
 	if (player->timer >= player->frame_time)
 	{
@@ -84,6 +83,7 @@ void	UpdatePlayer(t_player *player, float dt)
 			player->state = WALK;
 		player->dir = -1;
 	}
+	
 	else if (IsKeyDown(KEY_RIGHT))
 	{
 		player->pos_x += player->speed_x * dt;
@@ -91,14 +91,21 @@ void	UpdatePlayer(t_player *player, float dt)
 			player->state = WALK;
 		player->dir = 1;
 	}
-	else if (player->state != JUMP)
-		player->state = IDLE;
 	
-	if (IsKeyPressed(KEY_SPACE) && player->pos_y >= SCREEN_HEIGHT * 0.85f)
+	else
+	{
+		if (player->state !=JUMP)
+			player->state = IDLE;
+	}
+	
+	if (IsKeyPressed(KEY_SPACE) && !player->is_jumping)
 	{
 		player->vy = -player->jump_force;
-		player->state = JUMP;
+		player->is_jumping = true;
 	}
+
+	player->vy += gravity * dt;
+	player->pos_y += player->vy * dt;
 }
 
 void	DrawPlayer(t_player player)
