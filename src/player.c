@@ -105,7 +105,6 @@ void	UpdatePlayer(t_player *player, float dt)
 
 	player->vy += gravity * dt;
 	player->pos_y += player->vy * dt;
-	player->pos_x += player->vx * dt;
 }
 
 void	DrawPlayer(t_player player)
