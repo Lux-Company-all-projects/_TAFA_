@@ -19,7 +19,7 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 - ✅ Jump
 - ✅ Animations (WALK, IDLE, JUMP)
 - ❌ HUD
-- ❌ Title screen
+- ✅ Title screen [Quasi]
 - ❌ Finish screen
 - ❌ Game over screen
 - ❌ Option/Pause screen
