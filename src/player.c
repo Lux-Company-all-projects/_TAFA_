@@ -5,6 +5,14 @@ static float ground_level = 0;
 
 void	InitPlayer(t_player *player)
 {
+	for (int i = 0; i < 8; i++)
+	{
+		player->idle_image[i] = (Texture2D){0};
+		player->walk_image[i] = (Texture2D){0};
+		if (i < 5)
+			player->jump_image[i] = (Texture2D){0};
+	}
+
 	gravity = 900.0f;
 	ground_level = screen_height * 0.85f;
 
@@ -56,11 +64,11 @@ void	UpdatePlayer(t_player *player, float dt)
 {
 	player->timer += dt;
 	player->frame_time = (player->state == JUMP) ? 0.2f : 0.1f;
-    if (player->pos_y >= ground_level)
-    {
+    	if (player->pos_y >= ground_level)
+    	{
 		// Le joueur est au sol
-        player->pos_y = ground_level;
-        player->vy = 0;
+       		player->pos_y = ground_level;
+        	player->vy = 0;
 		player->state = IDLE;
 		player->is_jumping = false;
 	}
