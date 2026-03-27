@@ -33,7 +33,7 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 - ❌ Musics and sounds effects
 
 ## LEVEL IMPLEMENTATION
-- ❌ SUBSTATE Implementation
+- ✅ SUBSTATE Implementation
 - ❌ LEVEL 1
 - ❌ LEVEL 2
 
