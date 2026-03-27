@@ -195,9 +195,12 @@ void UnloadPlayer(t_player *player)
 {
 	for (int i = 0; i < 8; i++)
 	{
-		if (i < 5)
+		if (player->idle_image[i].id != 0)
+			UnloadTexture(player->idle_image[i]);
+
+		if (player->walk_image[i].id != 0)
+			UnloadTexture(player->walk_image[i]);
+		if (i < 5 && player->jump_image[i].id != 0)
 			UnloadTexture(player->jump_image[i]);
-		UnloadTexture(player->idle_image[i]);
-		UnloadTexture(player->walk_image[i]);
 	}
 }
