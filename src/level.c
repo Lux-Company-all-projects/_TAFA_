@@ -43,13 +43,11 @@ void UpdateLevel(t_level *level, float dt, t_player *player)
 
         if (CheckCollisionRecs(player->pos, blackBox))
         {
-            printf("%0.2f\n", player->pos.x);
+            printf("%0.2f\n", player->pos.width);
             showQuiz = true;
         }
         else
-        {
             showQuiz = false;
-        }
     }
 }
 
@@ -79,11 +77,11 @@ void DrawLevel(t_level *level)
             // Draw the quiz inside the rectangle
             const char *quizText[] = {
                 "Quiz:",
-                "Un homme qui regarde un portrait.",
-                "Quelqu'un lui demande: \"Qui est-ce?\"",
-                "Il répond: \"Je n'ai pas de soeur ni de frère,\"",
-                "mais le père de cet homme est le fils de mon père.",
-                "Qui est sur le protrait."};
+                "Lehilahy iray mijery sary.",
+                "Nisy olona nanontany azy: \"Iza io?\"",
+                "Namaly izy: \"Tsy manana anabavy sy rahalahy aho,\"",
+                "fa ny dadan'io olona io dia zanaky ny dadako.",
+                "Iza ilay amin'ny sary?"};
             for (int i = 0; i < 6; i++)
             {
                 DrawText(quizText[i], quizRect.x + 10, quizRect.y + 10 + i * 40, 20, RAYWHITE);
