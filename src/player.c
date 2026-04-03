@@ -39,6 +39,17 @@ void InitPlayer(t_player *player)
 		"resources/WALK/walk_07.png",
 		"resources/WALK/walk_08.png"};
 
+	// RUN Texture
+	const char *run_paths[8] = {
+		"resources/RUN/run_01.png",
+		"resources/RUN/run_02.png",
+		"resources/RUN/run_03.png",
+		"resources/RUN/run_04.png",
+		"resources/RUN/run_05.png",
+		"resources/RUN/run_06.png",
+		"resources/RUN/run_07.png",
+		"resources/RUN/run_08.png"};
+
 	// JUMP Texture
 	const char *jump_paths[5] = {
 		"resources/JUMP/jump_01.png",
@@ -51,6 +62,7 @@ void InitPlayer(t_player *player)
 	{
 		player->idle_image[i] = LoadTextureFromFile(idle_paths[i]);
 		player->walk_image[i] = LoadTextureFromFile(walk_paths[i]);
+		player->run_image[i] = LoadTextureFromFile(run_paths[i]);
 		if (i < 5)
 			player->jump_image[i] = LoadTextureFromFile(jump_paths[i]);
 	}
@@ -102,16 +114,34 @@ void UpdatePlayer(t_player *player, float dt)
 
 	if (IsKeyDown(KEY_LEFT) && player->can_move)
 	{
-		player->pos.x -= player->speed_x * dt;
-		if (player->state != JUMP)
-			player->state = WALK;
+		if (IsKeyDown(KEY_LEFT_SHIFT))
+		{
+			player->pos.x -= (player->speed_x * 3) * dt;
+			if (player->state != JUMP)
+				player->state = RUN;
+		}
+		else
+		{
+			player->pos.x -= player->speed_x * dt;
+			if (player->state != JUMP)
+				player->state = WALK;
+		}
 		player->dir = -1;
 	}
 	else if (IsKeyDown(KEY_RIGHT) && player->can_move)
 	{
-		player->pos.x += player->speed_x * dt;
-		if (player->state != JUMP)
-			player->state = WALK;
+		if (IsKeyDown(KEY_LEFT_SHIFT))
+		{
+			player->pos.x += (player->speed_x * 3) * dt;
+			if (player->state != JUMP)
+				player->state = RUN;
+		}
+		else
+		{
+			player->pos.x += player->speed_x * dt;
+			if (player->state != JUMP)
+				player->state = WALK;
+		}
 		player->dir = 1;
 	}
 	else
@@ -197,6 +227,24 @@ void DrawPlayer(t_player player)
 
 		DrawTexturePro(player.jump_image[player.current_frame], source_rec, player.pos, origin, 0.0f, WHITE);
 	}
+
+	if (player.state == RUN)
+	{
+		source_rec = (Rectangle){0, 0,
+								 (float)player.run_image[player.current_frame].width,
+								 (float)player.run_image[player.current_frame].height};
+
+		origin = (Vector2){
+			player.run_image[player.current_frame].width / 4.0f,
+			player.run_image[player.current_frame].height / 4.0f};
+
+		if (player.dir == -1)
+		{
+			source_rec.width = -source_rec.width;
+		}
+
+		DrawTexturePro(player.run_image[player.current_frame], source_rec, player.pos, origin, 0.0f, WHITE);
+	}
 }
 
 void UnloadPlayer(t_player *player)
@@ -205,9 +253,10 @@ void UnloadPlayer(t_player *player)
 	{
 		if (player->idle_image[i].id != 0)
 			UnloadTexture(player->idle_image[i]);
-
 		if (player->walk_image[i].id != 0)
 			UnloadTexture(player->walk_image[i]);
+		if (player->run_image[i].id != 0)
+			UnloadTexture(player->run_image[i]);
 		if (i < 5 && player->jump_image[i].id != 0)
 			UnloadTexture(player->jump_image[i]);
 	}

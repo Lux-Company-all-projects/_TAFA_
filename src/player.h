@@ -8,6 +8,7 @@ typedef enum
 {
 	IDLE,
 	WALK,
+	RUN,
 	JUMP
 } PlayerState;
 
@@ -28,6 +29,7 @@ typedef struct s_player
 	PlayerState state;
 	Texture2D idle_image[8];
 	Texture2D walk_image[8];
+	Texture2D run_image[8];
 	Texture2D jump_image[5];
 } t_player;
 

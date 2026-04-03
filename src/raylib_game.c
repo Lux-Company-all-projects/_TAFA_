@@ -98,61 +98,38 @@ int main(void)
 
     // De-Initialization
     //--------------------------------------------------------------------------------------
-    // De-Initialization trace
-    fprintf(stderr, "[EXIT] Starting de-initialization (currentScreen=%d)\n", currentScreen);
     // Unload current screen data before closing
     switch (currentScreen)
     {
     case LOGO:
-        fprintf(stderr, "[EXIT] Unloading LOGO screen\n");
         UnloadLogoScreen();
         break;
     case TITLE:
-        fprintf(stderr, "[EXIT] Unloading TITLE screen\n");
         UnloadTitleScreen();
         break;
     case OPTIONS:
-        fprintf(stderr, "[EXIT] Unloading OPTIONS screen\n");
         UnloadOptionsScreen();
         break;
     case GAMEPLAY:
-        fprintf(stderr, "[EXIT] Unloading GAMEPLAY screen\n");
         UnloadGameplayScreen();
         break;
     case ENDING:
-        fprintf(stderr, "[EXIT] Unloading ENDING screen\n");
         UnloadEndingScreen();
         break;
     default:
         break;
     }
-    fprintf(stderr, "[EXIT] Screens unloaded\n");
 
     // Unload global data loaded
-    fprintf(stderr, "[EXIT] Unloading global assets\n");
     UnloadFont(font);
     if (music.ctxData != 0)
     {
         if (IsAudioDeviceReady())
         {
-            fprintf(stderr, "[EXIT] Unloading music stream\n");
             UnloadMusicStream(music);
         }
     }
-    // Audio shutdown can hang on some backends (PulseAudio/miniaudio) during CloseAudioDevice.
-    // To avoid a silent freeze on exit we skip explicit audio device close/unload here.
-    if (IsAudioDeviceReady() && fxCoinLoaded)
-    {
-        fprintf(stderr, "[EXIT] Skipping UnloadSound(fxCoin) to avoid potential hang\n");
-    }
-    if (IsAudioDeviceReady())
-    {
-        fprintf(stderr, "[EXIT] Skipping CloseAudioDevice() to avoid potential hang\n");
-    }
-
-    fprintf(stderr, "[EXIT] Closing window\n");
     CloseWindow(); // Close window and OpenGL context
-    fprintf(stderr, "[EXIT] De-initialization complete\n");
     //--------------------------------------------------------------------------------------
 
     return 0;

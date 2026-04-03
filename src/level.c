@@ -8,10 +8,10 @@ float timer = 0.0f;
 bool hide_text = false;
 
 char *prologue_text[4] = {
-    "Dans un monde plongé dans les ténèbres,",
-    "où la peur et le désespoir règnent en maîtres,",
-    "où chacun est prisonnier de ses choix et désirs...",
-    "jusqu'à ce que..."};
+    "Ao anaty tontolo feno aizina,",//"Dans un monde plongé dans les ténèbres,",
+    "izay hanjakan'ny tahotra sy fahadisoam-panantenana,",//"où la peur et le désespoir règnent en maîtres,",
+    "izay ny tsirairay dia gejain'ny safidiny sy ny filàny...",//"où chacun est prisonnier de ses choix et désirs...",
+    "raha tsy..."};//"jusqu'à ce que..."};
 
 void LoadLevel(t_level *level, SubGameScreen levelType)
 {
@@ -40,10 +40,14 @@ void UpdateLevel(t_level *level, float dt, t_player *player)
             hide_text = true;
             player->can_move = true;
         }
-
-        if (CheckCollisionRecs(player->pos, blackBox))
+        Rectangle hitbox = {
+            player->pos.x - player->pos.width / 4,
+            player->pos.y - player->pos.height / 4,
+            player->pos.width / 2,
+            player->pos.height / 2
+        };
+        if (CheckCollisionRecs(hitbox, blackBox))
         {
-            printf("%0.2f\n", player->pos.width);
             showQuiz = true;
         }
         else
