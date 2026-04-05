@@ -8,10 +8,10 @@ float timer = 0.0f;
 bool hide_text = false;
 
 char *prologue_text[4] = {
-    "Ao anaty tontolo feno aizina,",//"Dans un monde plongé dans les ténèbres,",
-    "izay hanjakan'ny tahotra sy fahadisoam-panantenana,",//"où la peur et le désespoir règnent en maîtres,",
-    "izay ny tsirairay dia gejain'ny safidiny sy ny filàny...",//"où chacun est prisonnier de ses choix et désirs...",
-    "raha tsy..."};//"jusqu'à ce que..."};
+    "Ao anaty tontolo feno aizina,",                            //"Dans un monde plongé dans les ténèbres,",
+    "izay hanjakan'ny tahotra sy fahadisoam-panantenana,",      //"où la peur et le désespoir règnent en maîtres,",
+    "izay ny tsirairay dia gejain'ny safidiny sy ny filàny...", //"où chacun est prisonnier de ses choix et désirs...",
+    "raha tsy..."};                                             //"jusqu'à ce que..."};
 
 void LoadLevel(t_level *level, SubGameScreen levelType)
 {
@@ -44,8 +44,7 @@ void UpdateLevel(t_level *level, float dt, t_player *player)
             player->pos.x - player->pos.width / 4,
             player->pos.y - player->pos.height / 4,
             player->pos.width / 2,
-            player->pos.height / 2
-        };
+            player->pos.height / 2};
         if (CheckCollisionRecs(hitbox, blackBox))
         {
             showQuiz = true;
@@ -57,6 +56,8 @@ void UpdateLevel(t_level *level, float dt, t_player *player)
 
 void DrawLevel(t_level *level)
 {
+    int mouseX = GetMouseX();
+    int mouseY = GetMouseY();
     DrawRectangle(0, screen_height * 0.9, screen_width, screen_height, GRAY);
     DrawLineEx((Vector2){0, screen_height * 0.9}, (Vector2){screen_width, screen_height * 0.9}, 4, BLACK);
     switch (level->type)
@@ -103,18 +104,19 @@ void DrawLevel(t_level *level)
                     quizRect.x + 10 + i * (buttonWidth + 10),
                     buttonY,
                     buttonWidth,
-                    buttonHeight
-                };
-                DrawRectangleRec(btn, DARKGRAY);
+                    buttonHeight};
+
+                bool hovered = CheckCollisionPointRec((Vector2){mouseX, mouseX}, btn);
+
+                DrawRectangleRec(btn, hovered ? SKYBLUE : DARKGRAY);
                 DrawRectangleLinesEx(btn, 2, RAYWHITE);
 
                 int letterWidth = MeasureText(choices[i], 30);
                 DrawText(choices[i],
-                    btn.x + btn.width / 2 - letterWidth / 2,
-                    btn.y + btn.height / 2 - 15,
-                    30,
-                    RAYWHITE
-                );
+                         btn.x + btn.width / 2 - letterWidth / 2,
+                         btn.y + btn.height / 2 - 15,
+                         30,
+                         RAYWHITE);
             }
         }
         break;
