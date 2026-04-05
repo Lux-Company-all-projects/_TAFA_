@@ -90,6 +90,32 @@ void DrawLevel(t_level *level)
             {
                 DrawText(quizText[i], quizRect.x + 10, quizRect.y + 10 + i * 40, 20, RAYWHITE);
             }
+
+            // Definire la taille du bouton
+            int buttonWidth = (quizWidth - 50) / 4;
+            int buttonHeight = 40;
+            int buttonY = quizRect.y + quizHeight - buttonHeight - 20;
+
+            const char *choices[] = {"A", "B", "C", "D"};
+            for (int i = 0; i < 4; i++)
+            {
+                Rectangle btn = {
+                    quizRect.x + 10 + i * (buttonWidth + 10),
+                    buttonY,
+                    buttonWidth,
+                    buttonHeight
+                };
+                DrawRectangleRec(btn, DARKGRAY);
+                DrawRectangleLinesEx(btn, 2, RAYWHITE);
+
+                int letterWidth = MeasureText(choices[i], 30);
+                DrawText(choices[i],
+                    btn.x + btn.width / 2 - letterWidth / 2,
+                    btn.y + btn.height / 2 - 15,
+                    30,
+                    RAYWHITE
+                );
+            }
         }
         break;
     }
