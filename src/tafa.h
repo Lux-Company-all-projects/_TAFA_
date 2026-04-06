@@ -25,9 +25,9 @@ extern "C"
 	//----------------------------------------------------------------------------------
 	// Title Screen Functions Declaration
 	//----------------------------------------------------------------------------------
-	void InitTitleScreen(void);
-	void UpdateTitleScreen(void);
-	void DrawTitleScreen(void);
+	void InitTitleScreen(t_title *title);
+	void UpdateTitleScreen(t_title *title);
+	void DrawTitleScreen(t_title title);
 	void UnloadTitleScreen(void);
 	int FinishTitleScreen(void);
 

@@ -21,6 +21,7 @@ bool gameShouldClose = false;
 bool fxCoinLoaded = false;
 
 // Required variables to manage screen transitions (fade-in, fade-out)
+static t_title title;
 static float transAlpha = 0.0f;
 static bool onTransition = false;
 static bool transFadeOut = false;
@@ -174,7 +175,7 @@ static void ChangeToScreen(int screen)
         InitLogoScreen();
         break;
     case TITLE:
-        InitTitleScreen();
+        InitTitleScreen(&title);
         break;
     case OPTIONS:
         InitOptionsScreen();
@@ -244,7 +245,7 @@ static void UpdateTransition(void)
                 InitLogoScreen();
                 break;
             case TITLE:
-                InitTitleScreen();
+                InitTitleScreen(&title);
                 break;
             case OPTIONS:
                 InitOptionsScreen();
@@ -307,7 +308,7 @@ static void UpdateDrawFrame(float dt)
         break;
         case TITLE:
         {
-            UpdateTitleScreen();
+            UpdateTitleScreen(&title);
 
             if (FinishTitleScreen() == 1)
                 TransitionToScreen(OPTIONS);
@@ -360,7 +361,7 @@ static void UpdateDrawFrame(float dt)
         DrawLogoScreen();
         break;
     case TITLE:
-        DrawTitleScreen();
+        DrawTitleScreen(title);
         break;
     case OPTIONS:
         DrawOptionsScreen();

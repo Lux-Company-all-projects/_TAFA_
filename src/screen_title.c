@@ -1,17 +1,10 @@
 #include "tafa.h"
 
-typedef enum
-{
-	PLAY,
-	OPTION,
-	QUIT
-} HoverState;
 //----------------------------------------------------------------------------------
 // Module Variables Definition (local)
 //----------------------------------------------------------------------------------
 static int framesCounter = 0;
 static int finishScreen = 0;
-static HoverState hover_state = PLAY;
 
 //----------------------------------------------------------------------------------
 // Module Variables Definition
@@ -23,39 +16,58 @@ const char *menuItems[] = {"Hilalao", "Fikirakirana", "Hiala"};
 //----------------------------------------------------------------------------------
 
 // Title Screen Initialization logic
-void InitTitleScreen(void)
+void InitTitleScreen(t_title *title)
 {
 	framesCounter = 0;
 	finishScreen = 0;
-	hover_state = PLAY;
+
+	title->menu_font_size = font.baseSize * 2.5f;
+	const float menuSpacing = title->menu_font_size * 1.8f;
+	float menuStartY = screen_height / 2 - menuSpacing;
+
+	for (int i = 0; i < 3; i++)
+	{
+		title->text_size[i] = MeasureTextEx(font, menuItems[i], title->menu_font_size, 2);
+		title->text_pos[i] = (Vector2){(screen_width - title->text_size[i].x) / 2, menuStartY + i * menuSpacing};
+		title->highlight_rec[i] = (Rectangle){title->text_pos[i].x - 20, title->text_pos[i].y - 5, title->text_size[i].x + 40, title->text_size[i].y + 10};
+	}
+
+	title->hover_state = 0;
 }
 
 // Title Screen Update logic
-void UpdateTitleScreen(void)
+void UpdateTitleScreen(t_title *title)
 {
 	if (IsKeyPressed(KEY_UP))
 	{
-		if (hover_state == PLAY)
-			hover_state = QUIT;
+		if (title->hover_state == 0)
+			title->hover_state = 2;
 		else
-			hover_state--;
+			title->hover_state--;
 	}
 	if (IsKeyPressed(KEY_DOWN))
 	{
-		if (hover_state == QUIT)
-			hover_state = PLAY;
+		if (title->hover_state == 2)
+			title->hover_state = 0;
 		else
-			hover_state++;
+			title->hover_state++;
 	}
 
-	// Press enter or tap to change to GAMEPLAY screen
-	if (IsKeyPressed(KEY_ENTER))
+	for (int i = 0; i < 3; i++)
 	{
-		if (hover_state == PLAY)
+		bool hovered = CheckCollisionPointRec((Vector2){mouseX, mouseY}, title->highlight_rec[i]);
+		if (hovered)
+			title->hover_state = i;
+	}
+
+	// Press enter or click to change to GAMEPLAY screen
+	if (IsKeyPressed(KEY_ENTER) || IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+	{
+		if (title->hover_state == 0)
 			finishScreen = 2; // GAMEPLAY
-		if (hover_state == OPTION)
+		if (title->hover_state == 1)
 			finishScreen = 1; // OPTIONS
-		if (hover_state == QUIT)
+		if (title->hover_state == 2)
 			gameShouldClose = true; // QUIT - close game
 		// Play sound only if audio device is ready
 		if (IsAudioDeviceReady() && fxCoinLoaded)
@@ -64,7 +76,7 @@ void UpdateTitleScreen(void)
 }
 
 // Title Screen Draw logic
-void DrawTitleScreen(void)
+void DrawTitleScreen(t_title title)
 {
 	ClearBackground(WHITE); // Use a clean white background
 
@@ -73,26 +85,17 @@ void DrawTitleScreen(void)
 	Vector2 titlePos = {(screen_width - titleTextSize.x) / 2, 60};
 	DrawTextEx(font, "TAFA", titlePos, titleFontSize, 2, BLACK);
 
-	const float menuFontSize = font.baseSize * 2.5f;
-	const float menuSpacing = menuFontSize * 1.8f;
-	float menuStartY = screen_height / 2 - menuSpacing;
-
 	for (int i = 0; i < 3; i++)
 	{
-		Vector2 textSize = MeasureTextEx(font, menuItems[i], menuFontSize, 2);
-		Vector2 pos = {(screen_width - textSize.x) / 2, menuStartY + i * menuSpacing};
-
-		Color color = (hover_state == i) ? BLACK : GRAY;
-
-		if (hover_state == i)
+		Color color = (title.hover_state == i) ? BLACK : GRAY;
+		if (title.hover_state == i)
 		{
-			Rectangle highlightRec = {pos.x - 20, pos.y - 5, textSize.x + 40, textSize.y + 10};
-			DrawRectangleRec(highlightRec, BLACK);
-			DrawTextEx(font, menuItems[i], pos, menuFontSize, 2, WHITE);
+			DrawRectangleRec(title.highlight_rec[i], BLACK);
+			DrawTextEx(font, menuItems[i], title.text_pos[i], title.menu_font_size, 2, WHITE);
 		}
 		else
 		{
-			DrawTextEx(font, menuItems[i], pos, menuFontSize, 2, color);
+			DrawTextEx(font, menuItems[i], title.text_pos[i], title.menu_font_size, 2, color);
 		}
 	}
 }

@@ -3,6 +3,15 @@
 
 #include "tafa.h"
 
+typedef struct s_title
+{
+	float menu_font_size;
+	Vector2 text_size[3];
+	Vector2 text_pos[3];
+	Rectangle highlight_rec[3];
+	int hover_state;
+} t_title;
+
 typedef struct s_player
 {
 	Rectangle pos;
@@ -26,8 +35,8 @@ typedef struct s_player
 
 typedef struct s_level
 {
-    SubGameScreen type;
-    const char *name;
+	SubGameScreen type;
+	const char *name;
 } t_level;
 
 #endif
