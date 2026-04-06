@@ -15,26 +15,27 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 ---
 
 ## Fonctionnalités
-- ✅ Mouvements
+- ✅ Walk
+- ✅ Run
 - ✅ Jump
-- ✅ Animations (WALK, IDLE, JUMP)
+- ✅ Animations (WALK, RUN, IDLE, JUMP)
 - ❌ HUD
-- ✅ Title screen [Quasi]
+- ✅ Title screen
 - ❌ Finish screen
 - ❌ Game over screen
 - ❌ Option/Pause screen
 - ❌ AI follow
-- ❌ Collision with env
+- ⚒️ Collision with env
 - ❌ Save'n load system
 - ❌ Particles effects if needed
 - ❌ Camera shacking
 - ❌ Upgrading system
-- ❌ Level Design
+- ⚒️ Level Design
 - ❌ Musics and sounds effects
 
 ## LEVEL IMPLEMENTATION
 - ✅ SUBSTATE Implementation
-- ❌ LEVEL 1
+- ⚒️ LEVEL 1
 - ❌ LEVEL 2
 
 ## AMELIORATIONS DE PERFORMANCE
