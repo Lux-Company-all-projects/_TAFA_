@@ -31,7 +31,7 @@ void DrawGameplayScreen(void)
 
 void UnloadGameplayScreen(void)
 {
-	UnloadLevel(&level);
+	UnloadLevel(&level, &player);
 	UnloadPlayer(&player);
 }
 
