@@ -43,7 +43,9 @@ Et cette histoire, c'est à vous d'en décider...Assume votre décision.
 	While not visible in short code snippets, consider loading resources asynchronously to avoid stalls.
 
 ## Crédits
-Luca RANDRIANIRINA alias @Lux
+Developed by Lux Company
+Story by Fanoratro
+Inspired by Malagasy folklore
 
 *Ce jeu est créé avec Raylib5 en C*
 
